@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Manipulation Tasks</title>
+  <link rel="stylesheet" href="06Nov_DOM.css">
+</head>
+<body>
+
+  <h1 id="heading">Welcome!</h1>
+  <button id="btn">Change Text & Style</button>
+
+  <h2>Click a Button to Change Background Color</h2>
+  
+  <button id="redBtn">Red</button>
+  <button id="blueBtn">Blue</button>
+  <button id="greenBtn">Green</button>
+  <button id="orangeBtn">Orange</button>
+  <button id="resetBtn">Reset</button>
+
+  <p id="colorMessage"></p>
+
+  <script>
+    document.getElementById("btn").addEventListener("click", function() {
+      const heading = document.getElementById("heading");
+      heading.textContent = "Hello Students!";
+      heading.style.color = "green";
+      heading.style.fontSize = "30px";
+    });
+
+    const colorMessage = document.getElementById("colorMessage");
+
+    function changeColor(colorName, text_color) {
+      document.body.style.backgroundColor = colorName;
+      heading.style.color = text_color;
+      colorMessage.textContent = "Current Color: " + colorName.charAt(0).toUpperCase() + colorName.slice(1);
+    }
+
+    document.getElementById("redBtn").onclick = () => changeColor("red", "white");
+    document.getElementById("blueBtn").onclick = () => changeColor("blue", "white");
+    document.getElementById("greenBtn").onclick = () => changeColor("green", "white");
+    document.getElementById("orangeBtn").onclick = () => changeColor("orange", "white");
+
+    document.getElementById("resetBtn").onclick = function() {
+      document.body.style.backgroundColor = "white";
+      heading.style.color = "black"
+      colorMessage.textContent = "";
+    };
+  </script>
+</body>
+</html>

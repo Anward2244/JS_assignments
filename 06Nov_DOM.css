@@ -1,0 +1,66 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+    transition: all 0.75s ease;
+}
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #000000;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 5px;
+    transition: all 0.75s ease;
+}
+#colorMessage {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#redBtn{
+    border: 2px solid red;
+    color: red;
+    background-color: white;
+}
+#redBtn:hover{
+    background-color: red;
+    color: white;
+}
+#blueBtn{
+    border: 2px solid blue;
+    color: blue;
+    background-color: white;
+}
+#blueBtn:hover{
+    background-color: blue;
+    color: white;
+}
+#greenBtn{
+    border: 2px solid green;
+    color: green;
+    background-color: white;
+}
+#greenBtn:hover{
+    background-color: green;
+    color: white;
+}
+#orangeBtn{
+    border: 2px solid orange;
+    color: orange;
+    background-color: white;
+}
+#orangeBtn:hover{
+    background-color: orange;
+    color: white;
+}
+#resetBtn{
+    border: 2px solid black;
+    color: black;
+    background-color: white;
+}
+#colorMessage{
+    color: white;
+}
