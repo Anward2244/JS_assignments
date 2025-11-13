@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip Coin</title>
+</head>
+<body>
+    <h1>Heads and Tails</h1>
+    <p>Flip a virtual coin with this online and free app.</p>
+    <img src="https://flipsimu.com/static/coin-image-big-b4e8096a3ec8ecc2b96d5998f19bda6c.png" alt="" width="350px">
+    <br>
+    <button>Click to Toss</button>
+
+
+    <script>
+        document.body.style.textAlign='center'
+        document.body.style.fontFamily = 'verdana'
+
+        head_tag = document.getElementsByTagName('h1')
+        head_tag[0].style.fontSize = '52px'
+
+        para = document.getElementsByTagName('p')
+        para[0].style.color = 'grey'
+        para[0].style.fontSize = '18px'
+
+        img_tag = document.querySelector('img')
+
+        btn_tag = document.querySelector('button')
+
+        btn_tag.onclick = function(){
+            Rand_no = Math.random()*100
+            num = Math.round(Rand_no)
+            
+            if(num % 2 == 0){
+                console.log(num)
+                img_tag.src = 'https://cdn.shopify.com/s/files/1/0628/4358/4735/files/India_2_Rupees_2015_R.jpg?v=1659678996'
+            }
+            else{
+                console.log(num)
+                img_tag.src = 'https://upload.wikimedia.org/wikipedia/commons/1/16/Indian_1_Rupee_Coin_Reverse_or_Tails.jpg'
+        }
+    }
+
+    </script>
+</body>
+</html>
