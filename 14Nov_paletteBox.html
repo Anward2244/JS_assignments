@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Box</title>
+    <style>
+        button{
+            padding: 16px 32px;
+            border: 0;
+            color: white;
+            font-size: 15px;
+            font-weight: 300;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .box{
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: inline-flex;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .deleteBtn {
+            position: absolute;
+            top: 1px;
+            right: 5px;
+            color: white;
+            font-size: 24px;
+            padding: 4px 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="red" style="background-color: rgb(255, 65, 65);">Red</button>
+    <button id="green" style="background-color: rgb(57, 175, 57);">Green</button>
+    <button id="blue" style="background-color: rgb(83, 83, 255);">Blue</button>
+    <button id="yellow" style="background-color: rgb(250, 250, 80);">Yellow</button>
+    <button id="pink" style="background-color: pink;">Pink</button>
+    <button id="clear" style="background-color: black;">Clear All</button>
+
+    <h3>Box Area:</h3>
+
+    <script>
+        document.body.style.textAlign = 'center';
+
+
+        function clr_change(a){
+            let clr_box = document.createElement('div');
+            clr_box.style.backgroundColor = a;
+            clr_box.classList.add('box');
+            document.body.appendChild(clr_box);
+
+            let del = document.createElement('span');
+            del.textContent = "x";
+            del.classList.add('deleteBtn');
+
+            clr_box.appendChild(del);
+
+            del.onclick = () => {clr_box.remove()};
+        };
+        
+        document.getElementById('red').onclick = () => clr_change('rgb(255, 65, 65)');
+        document.getElementById('green').onclick = () => clr_change('rgb(57, 175, 57)');
+        document.getElementById('blue').onclick = () => clr_change('rgb(83, 83, 255)');
+        document.getElementById('yellow').onclick = () => clr_change('rgb(250, 250, 80)');
+        document.getElementById('pink').onclick = () => clr_change('pink');
+        
+        document.getElementById("clear").onclick = () => {
+        let boxes = document.querySelectorAll(".box");
+        boxes.forEach(b => b.remove());
+    };
+    </script>
+</body>
+</html>
