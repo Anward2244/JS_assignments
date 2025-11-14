@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>methods</title>
+</head>
+<body>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <p>item1</p>
+    <button>click for styling</button>
+
+    <script>
+        document.body.style.textAlign = 'center'
+        let a = document.querySelector('p')       // using querySelector()              
+        a.textContent='Methods'                 
+        a.style.color = 'blue'                    
+        a.style.fontSize = '24px'  
+        
+        let arr = document.querySelectorAll('p')  // using querySelectorAll()
+        console.log(arr)
+        
+        let btn = document.querySelector('button')
+        btn.style.padding = '15px'
+        btn.onclick = () => {
+            for(let i = 1; i <= arr.length; i ++){
+            arr[i].style.color = 'green'
+            }
+        }
+    
+    </script>
+
+</body>
+</html>
