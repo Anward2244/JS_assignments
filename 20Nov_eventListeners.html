@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box, p{
+            transition: all 0.7s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <p>Light grey</p>
+
+    <script>
+
+        let b = document.getElementById('box')
+        b.style.width = '200px'
+        b.style.height = '200px'
+        b.style.backgroundColor = 'lightgrey'
+
+        let p = document.querySelector('p')
+        p.style.fontSize = '50px'
+
+        
+        b.addEventListener('click', ()=>{
+            b.style.backgroundColor = 'red'
+            p.textContent = 'Red'
+            p.style.color = 'red'
+        })
+
+        b.addEventListener('dblclick', ()=>{
+            b.style.backgroundColor = 'blue'
+            p.textContent = 'Blue'
+            p.style.color = 'blue'
+        })
+
+        b.addEventListener('mouseover', ()=>{
+            b.style.backgroundColor = 'green'
+            p.textContent = 'Green'
+            p.style.color = 'green'
+        })
+
+        b.addEventListener('mouseout', ()=>{
+            b.style.backgroundColor = 'lightgrey'
+            p.textContent = 'Light grey'
+            p.style.color = 'lightgrey'
+        })
+
+        document.addEventListener('keypress', ()=>{
+            b.style.backgroundColor = 'yellow'
+            p.textContent = 'Yellow'
+            p.style.color = 'yellow'
+        })
+
+
+    </script>
+</body>
+</html>
