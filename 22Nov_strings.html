@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String validation</title>
+    <style>
+        html,body{
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+        }
+        *{
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        button{
+            color: white;
+            border: 0;
+            background-color: black;
+        }
+
+    </style>
+</head>
+<body>
+    <input type="text" placeholder="Enter your name">
+
+    <button type="submit">Submit</button>
+    <p></p>
+
+    <script>
+
+        let t = document.querySelector('input')
+        let btn = document.querySelector('button')
+        let para = document.querySelector('p')
+        
+        btn.addEventListener('click',()=>{
+            let text = t.value
+            if ( text == ''){
+                para.innerHTML = '❌ Name is required'
+                para.style.color = 'red'
+            }
+
+            else if (text.length < 3){
+                para.innerHTML = '⚠️ Name must be at least 3 characters'
+                para.style.color = 'orange'
+            }
+
+            else{
+                para.innerHTML = `✅ Welcome, ${text}`
+                para.style.color = 'green'
+            }
+        })
+    </script>
+</body>
+</html>
