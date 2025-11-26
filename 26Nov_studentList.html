@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Directory</title>
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #showStudentsBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fc4040;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #showStudentsBtn:hover {
+            background-color: white;
+            color: black;
+            border: 1px solid #fc4040;
+        }
+
+        #studentsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .student-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .student-card h3 {
+            color: #1d1469;
+            border-bottom: 2px solid #644e07;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .student-card p {
+            margin: 5px 0;
+        }
+
+        .student-card ul {
+            list-style: disc;
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Student Directory</h1>
+        <button id="showStudentsBtn">Show Students</button>
+    </header>
+
+    <div id="studentsContainer"></div>
+
+    <script>
+        let studentDirectory = [
+            {
+                name: "Alice Johnson",
+                age: 21,
+                marks: 85,
+                skills: ["JavaScript", "HTML", "CSS", "Git"],
+                address: {
+                    city: "New York",
+                    pincode: "10001"
+                }
+            },
+            {
+                name: "Bob Williams",
+                age: 22,
+                marks: 78,
+                skills: ["Python", "Data Science", "SQL"],
+                address: {
+                    city: "San Francisco",
+                    pincode: "94105"
+                }
+            },
+            {
+                name: "Charlie Brown",
+                age: 20,
+                marks: 92,
+                skills: ["C++", "Algorithms", "Problem Solving"],
+                address: {
+                    city: "Chicago",
+                    pincode: "60601"
+                }
+            }
+        ];
+
+        
+        let showStudentsBtn = document.getElementById('showStudentsBtn');
+        let studentsContainer = document.getElementById('studentsContainer');
+
+        showStudentsBtn.addEventListener('click',() =>{
+
+            for (let student of studentDirectory) {
+                
+                let card = document.createElement('div');
+                card.classList.add('student-card');
+
+                let nameElement = document.createElement('h3');
+                nameElement.textContent = student.name;
+                
+                let ageElement = document.createElement('p');
+                ageElement.textContent = `Age: ${student.age}`;
+
+                let marksElement = document.createElement('p');
+                marksElement.textContent = `Marks: ${student.marks}`;
+
+                let skillsTitle = document.createElement('p');
+                skillsTitle.innerHTML = '<b>Skills:</b>';
+                
+                let skillsList = document.createElement('ul');
+
+                for (let skill of student.skills) {
+                    let skillItem = document.createElement('li');
+                    skillItem.textContent = skill;
+                    skillsList.appendChild(skillItem);
+                }
+
+                let addressElement = document.createElement('p');
+                addressElement.innerHTML = `<b>Address:</b> ${student.address.city}, ${student.address.pincode}`;
+
+                card.appendChild(nameElement);
+                card.appendChild(ageElement);
+                card.appendChild(marksElement);
+                card.appendChild(skillsTitle);
+                card.appendChild(skillsList);
+                card.appendChild(addressElement);
+
+                studentsContainer.appendChild(card);
+            }
+        });
+        
+
+    </script>
+</body>
+</html>
