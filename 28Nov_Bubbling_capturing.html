@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubbling and capturing</title>
+    <style>
+
+        html, body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        div{
+            width: 50%;
+            transition: all 1s ease;
+            padding: 30px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+        p{
+            font-size: large;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            transition: all 1s ease;
+        }
+          button{
+            margin: 20px;
+            padding: 20px 50px;
+            color: white;
+            border: 0;
+            border-radius: 5px;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p>OUTER</p>
+        <div>
+            <p>MIDDLE</p>
+            <div>
+                <p>INNER</p>
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <button>Bubbling</button>
+        <button>Capturing</button>
+    </center>
+    <div>
+        <p></p>
+    </div>
+    <script>
+        let div_ele = document.getElementsByTagName('div')
+        let para = document.getElementsByTagName('p')
+        let btn = document.getElementsByTagName('button')
+
+        div_ele[0].style.borderStyle = 'solid'
+        div_ele[0].style.borderWidth = '3px'
+        div_ele[0].style.borderColor = 'red'
+
+        div_ele[1].style.borderStyle = 'solid'
+        div_ele[1].style.borderWidth = '3px'
+        div_ele[1].style.borderColor = 'green'
+
+        div_ele[2].style.borderStyle = 'solid'
+        div_ele[2].style.borderWidth = '3px'
+        div_ele[2].style.borderColor = 'blue'
+
+        div_ele[3].style.borderStyle = 'solid'
+        div_ele[3].style.borderWidth = '2px'
+        div_ele[3].style.borderColor = 'grey'
+
+        para[3].innerText += ''
+
+        btn[0].addEventListener('click',()=>{
+            para[3].innerText = ''
+            para[3].innerText += '\n-------Bubbling Mode--------'
+
+            div_ele[0].addEventListener('click', ()=>{
+                div_ele[0].style.backgroundColor = 'rgb(255, 80, 80)'
+                para[3].innerText += '\nOuter'
+            })
+
+            div_ele[1].addEventListener('click', ()=>{
+                div_ele[1].style.backgroundColor = 'rgb(136, 255, 125)'
+                para[3].innerText += '\nMiddle'
+            })
+
+            div_ele[2].addEventListener('click', ()=>{
+                div_ele[2].style.backgroundColor = 'rgb(103, 168, 253)'
+                para[3].innerText += '\nInner'
+            })
+        })
+
+        btn[1].addEventListener('click',()=>{
+            para[3].innerText = ''
+            para[3].innerText += '\n-------Capturing Mode--------'
+            div_ele[0].addEventListener('click', ()=>{
+                div_ele[0].style.backgroundColor = 'rgb(255, 80, 80)'
+                para[3].innerText += '\nOuter'
+            },true)
+
+            div_ele[1].addEventListener('click', ()=>{
+                div_ele[1].style.backgroundColor = 'rgb(136, 255, 125)'
+                para[3].innerText += '\nMiddle'
+            },true)
+
+            div_ele[2].addEventListener('click', ()=>{
+                div_ele[2].style.backgroundColor = 'rgb(103, 168, 253)'
+                para[3].innerText += '\nInner'
+            },true)
+        })
+    </script>
+</body>
+</html>
