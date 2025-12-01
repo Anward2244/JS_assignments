@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM</title>
+    <style>
+        html,body{
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .btn_con{
+            width: 60%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        button{
+            padding: 24px 50px;
+            border: 0;
+            margin: 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 300;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        #url{
+            background-color: rgb(255, 88, 88);
+        }
+        #new_win{
+            background-color: rgb(122, 223, 122);
+        }
+        #start_timer{
+            background-color: rgb(89, 211, 205);
+        }
+        #stop_timer{
+            background-color: rgb(154, 102, 214);
+        }
+        #reset{
+            background-color: rgb(255, 208, 53);
+            color: black;
+        }
+        .display{
+            border: 1px solid rgb(107, 107, 107);
+            width: 70%;
+            margin-top: 24px;
+            border-radius: 10px;
+            height: max-content;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h3, #timer{
+            margin: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>DOM Task</h1>
+    <div class="btn_con">
+        <button id="url">Show Current URL</button>
+        <button id="new_win">Open a Window</button>
+        <button id="start_timer">Start Timer</button>
+        <button id="stop_timer">Stop Timer</button>
+        <button id="reset">Reset Timer</button>
+    </div>
+
+    <div class="display">
+        <h2 id="info"></h2>
+        <h3>Timer</h3>
+        <h1 id="timer">0</h1>
+    </div>
+
+
+    <script>
+        let time = 0
+        let counter = 0
+        let btn_url = document.getElementById('url')
+        let add_info = document.getElementById('info')
+        let new_win = document.getElementById('new_win')
+        let start = document.getElementById('start_timer')
+        let stop = document.getElementById('stop_timer')
+        let timer_count = document.getElementById('timer')
+        let reset_btn = document.getElementById('reset')
+
+        btn_url.addEventListener('click',()=>{
+            add_info.innerHTML = 'Current URL: ' + location.href
+        })
+
+        new_win.addEventListener('click',()=>{
+            window.open('https://www.google.com', '_blank')
+        })
+
+        start.addEventListener('click',()=>{
+            time = setInterval(()=>{
+                counter++
+                timer_count.innerText = counter
+            },1000)
+        })
+
+        stop.addEventListener('click',()=>{
+            clearInterval(time)
+        })
+
+        reset_btn.addEventListener('click',()=>{
+            time = 0
+            counter = 0
+            timer_count.innerText = counter
+        })
+
+    </script>
+</body>
+</html>
