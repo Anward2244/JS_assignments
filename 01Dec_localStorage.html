@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register Simulation (localStorage)</title>
+    <style>
+        html,body{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+        h1{
+            color: #333;
+            margin-bottom: 20px;
+        }
+        div{
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 10px;
+        }
+        .forms{
+            width: 90%;
+            max-width: 900px;
+            height: max-content;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .register, .login{
+            display: flex;
+            flex-direction: column;
+            width: 45%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        h2, h4 {
+            text-align: center;
+            color: #007bff;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        input{
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        button{
+            padding: 12px 45px;
+            border-radius: 5px;
+            margin-top: 15px;
+            width: 90%;
+            border: none;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #reg{
+            background-color: #28a745;
+        }
+        #reg:hover{
+            background-color: #1e7e34;
+        }
+        #log{
+            background-color: #007bff;
+        }
+        #log:hover{
+            background-color: #0056b3;
+        }
+        #logoutBtn {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: none;
+        }
+        #logoutBtn:hover{
+            background-color: #c82333;
+        }
+        .users{
+            width: 90%;
+            max-width: 900px;
+            padding: 20px;
+            margin-top: 25px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .users h2 {
+            color: #6c757d;
+        }
+        .users ul{
+            list-style: none;
+            padding: 0;
+        }
+        .users li{
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border-left: 3px solid #007bff;
+            font-size: 0.9em;
+        }
+        .status-message {
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+            text-align: center;
+            width: 90%;
+            max-width: 900px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .forms {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .register, .login {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Register/ Login Form</h1>
+    
+    <button id="logoutBtn">Logout</button>
+
+    <div id="authStatus" class="status-message"></div>
+
+    <div class="forms">
+        <div class="register">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <input type="text" id="regName" placeholder="Name" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="password" id="regPassword" placeholder="Password" required>
+                <button type="submit" id="reg">Register</button>
+            </form>
+        </div>
+        <div class="login">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit" id="log">Login</button>
+            </form>
+        </div>
+    </div>
+    <div class="users">
+        <h2>Registered Users</h2>
+        <ul id="registeredUsersList">
+        </ul>
+    </div>
+
+    <script>
+        
+        let STORAGE_KEY = 'user_directory';
+        
+        let currentLoggedInUser = null; 
+
+        let registerForm = document.getElementById('registerForm');
+        let regNameInput = document.getElementById('regName');
+        let regEmailInput = document.getElementById('regEmail');
+        let regPasswordInput = document.getElementById('regPassword');
+        
+        let loginForm = document.getElementById('loginForm');
+        let loginEmailInput = document.getElementById('loginEmail');
+        let loginPasswordInput = document.getElementById('loginPassword');
+        
+        let logoutBtn = document.getElementById('logoutBtn');
+        let authStatus = document.getElementById('authStatus');
+        let registeredUsersList = document.getElementById('registeredUsersList');
+        let forms = [registerForm, loginForm];
+        
+        let displayUsersLogic = () => {
+            let users = [];
+            try {
+                let usersJson = localStorage.getItem(STORAGE_KEY);
+                users = usersJson ? JSON.parse(usersJson) : [];
+            } catch (error) {
+                console.error("Error reading from localStorage:", error);
+            }
+            
+            registeredUsersList.innerHTML = '';
+            
+            if (users.length === 0) {
+                let li = document.createElement('li');
+                li.textContent = 'No users registered yet.';
+                registeredUsersList.appendChild(li);
+                return;
+            }
+
+            users.forEach(user => {
+                let li = document.createElement('li');
+                li.textContent = `Name: ${user.name}`;
+                registeredUsersList.appendChild(li);
+            });
+        };
+
+        let updateUILogic = (message = null, isError = false) => {
+            
+            if (message) {
+                authStatus.textContent = message;
+                authStatus.className = 'status-message ' + (isError ? 'error' : 'success');
+                authStatus.style.display = 'block';
+            }
+
+            if (currentLoggedInUser) {
+                logoutBtn.style.display = 'block';
+                forms.forEach(form => form.style.pointerEvents = 'none');
+                
+                if (!message || message.includes("Success")) {
+                    authStatus.textContent = `Login Success! Welcome, ${currentLoggedInUser.name}.`;
+                    authStatus.className = 'status-message success';
+                    authStatus.style.display = 'block';
+                }
+            } else {
+                logoutBtn.style.display = 'none';
+                forms.forEach(form => form.style.pointerEvents = 'auto');
+                
+                if (!message) {
+                    authStatus.style.display = 'none';
+                }
+            }
+            
+            displayUsersLogic();
+        };
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let name = regNameInput.value.trim();
+            let email = regEmailInput.value.trim();
+            let password = regPasswordInput.value.trim();
+
+            if (!name || !email || !password) {
+                updateUILogic("Error: All fields are required for registration.", true);
+                return;
+            }
+
+            let users = [];
+            try {
+                let usersJson = localStorage.getItem(STORAGE_KEY);
+                users = usersJson ? JSON.parse(usersJson) : [];
+            } catch (error) {
+                console.error("Error reading from localStorage:", error);
+            }
+
+            if (users.some(user => user.email === email)) {
+                updateUILogic("Error: An account with this email already exists.", true);
+                return;
+            }
+
+            let newUser = { name, email, password };
+            users.push(newUser);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+
+            updateUILogic(`Registration successful for ${name}! You can now log in.`, false);
+            registerForm.reset();
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let email = loginEmailInput.value.trim();
+            let password = loginPasswordInput.value.trim();
+ 
+            if (!email || !password) {
+                updateUILogic("Error: Both email and password are required for login.", true);
+                return;
+            }
+
+            let users = [];
+            try {
+                let usersJson = localStorage.getItem(STORAGE_KEY);
+                users = usersJson ? JSON.parse(usersJson) : [];
+            } catch (error) {
+                console.error("Error reading from localStorage:", error);
+            }
+
+            let foundUser = users.find(user => 
+                user.email === email && user.password === password
+            );
+
+            if (foundUser) {
+                currentLoggedInUser = foundUser;
+                loginForm.reset();
+                updateUILogic(`Login Success! Welcome, ${foundUser.name}.`, false);
+            } else {
+                currentLoggedInUser = null;
+                updateUILogic("Invalid Credentials.", true);
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            currentLoggedInUser = null; 
+            updateUILogic("You have been successfully logged out.", false);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUILogic();
+        });
+    </script>
+</body>
+</html>
